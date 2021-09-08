@@ -8,4 +8,5 @@ class ProfileForm(forms.ModelForm):
         fields = (
             'name',
             'bio',
+            'image',
         )

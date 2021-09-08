@@ -7,9 +7,12 @@
 {% block content %}
 <div class="container ml-auto mr-auto">
     <h1 class="display-3"><u>{{ profile.name }}</u></h1>
+    {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="Image of {{ profile.name }}" height="300">
+    {% endif %}
     <p class="mt-4">{{ profile.bio }}</p>
     {% if request.user == profile.user %}
-    <a href="{% url 'profile_edit' %}" class="p-2 btn btn-primary rounded mt-4">Edit Profile</a>
+    <a href="{% url 'profile_new' %}" class="p-2 btn btn-primary rounded mt-4">Edit Profile</a>
 {% endif %}
 </div>
 <div class="p-6 text-2xl">

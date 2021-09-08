@@ -73,29 +73,41 @@ def profile_detail(request, pk):
     return render(request, 'profiles/profile_detail.html', args)
 
 @login_required
-def profile_edit(request):
-    user = request.user
-    if request.method == 'POST':
-        form = ProfileForm(request.POST)
+def profile_new(request):
+    if Profile.objects.filter(user=request.user).exists():
+        return redirect('profile_edit')
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            try:
-                profile = Profile.objects.get(user=user)
-                profile.name = form.cleaned_data['name']
-                profile.bio = form.cleaned_data['bio']
-                profile.save()
-            except Profile.DoesNotExist:
-                name = form.cleaned_data['name']
-                bio = form.cleaned_data['bio']
-                profile = Profile.objects.create(user=user, name=name, bio=bio)
-                profile.save()
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
             return redirect('profile_detail', pk=profile.pk)
     else:
-        try:
-            profile = Profile.objects.get(user=user)
-            form = ProfileForm(instance=profile)
-        except Profile.DoesNotExist:
-            form = ProfileForm()
+        form = ProfileForm()
     args = {
-        'form': form
+        'form': form,
+    }
+    return render(request, 'profiles/profile_edit.html', args)
+
+
+@login_required
+def profile_edit(request):
+    if not Profile.objects.filter(user=request.user).exists():
+        return redirect('profile_new')
+    profile = get_object_or_404(Profile, user=request.user)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = Profile.objects.get(user=request.user)
+            profile.name = form.cleaned_data['name']
+            profile.bio = form.cleaned_data['bio']
+            profile.image = form.cleaned_data['image']
+            profile.save()
+            return redirect('profile_detail', pk=profile.pk)
+    else:
+        form = ProfileForm(instance=profile)
+    args = {
+        'form': form,
     }
     return render(request, 'profiles/profile_edit.html', args)
