@@ -5,8 +5,23 @@ Profile Home
 {% endblock %}
 
 {% block content %}
-<div class="p-6">
-    Welcome to profile home!
-    <a href="{% url 'logout' %}">Logout</a>
+<div class="p-6 text-5xl font-bold">
+    Welcome to profile home!<br>
+</div>
+
+<div class="p-6 text-3xl text-gray-600">
+    <p>Click <a href="{% url 'profile_edit' %}" class="underline font-bold">here</a> to make/edit your profile.</p>
+</div>
+
+
+<div class="p-10 text-xl">
+    <p class="font-bold">Profiles:</p>
+    <ul class="list-disc">
+        {% for p in profiles %}
+            <li class="mt-2"><a href="{% url 'profile_detail' pk=p.pk %}" class="hover:underline">{{ p.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+
 </div>
 {% endblock %}

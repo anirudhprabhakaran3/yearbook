@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from .models import Profile
+from .forms import ProfileForm
 
 # Create your views here.
 
@@ -52,10 +55,50 @@ def login_view(request):
 
 @login_required
 def profile_home(request):
-    return render(request, 'profiles/profile_home.html')
+    profiles = Profile.objects.all().order_by('name')
+    args = {
+        'profiles': profiles,
+    }
+    return render(request, 'profiles/profile_home.html', args)
 
 @login_required
 def logout_view(request):
     logout(request)
     messages.info(request, "Logged out successfully")
     return redirect("index")
+
+@login_required
+def profile_detail(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    args = {
+        'profile': profile,
+    }
+    return render(request, 'profiles/profile_detail.html', args)
+
+@login_required
+def profile_edit(request):
+    user = request.user
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            try:
+                profile = Profile.objects.get(user=user)
+                profile.name = form.cleaned_data['name']
+                profile.bio = form.cleaned_data['bio']
+                profile.save()
+            except Profile.DoesNotExist:
+                name = form.cleaned_data['name']
+                bio = form.cleaned_data['bio']
+                profile = Profile.objects.create(user=user, name=name, bio=bio)
+                profile.save()
+            return redirect('profile_detail', pk=profile.pk)
+    else:
+        try:
+            profile = Profile.objects.get(user=user)
+            form = ProfileForm(instance=profile)
+        except Profile.DoesNotExist:
+            form = ProfileForm()
+    args = {
+        'form': form
+    }
+    return render(request, 'profiles/profile_edit.html', args)

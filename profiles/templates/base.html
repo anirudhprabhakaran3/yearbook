@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} | Batch of 2024, NITK</title>
+    <title>{% block title %}{% endblock %} | ECE Yearbook</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
 
     <div class="bg-blue-500 text-white p-6 flex align-center justify-between">
-        <h1 class="text-xl font-bold"> <a href="{% url 'index' %}">Batch of 2024, NITK</a></h1>
+        <h1 class="text-xl font-bold"> 
+            <a href="{% url 'index' %}">ECE Yearbook</a>
+        </h1>
         {% if user.is_authenticated %}
-            <h1 class="text-lg">Welcome {{ user.username }}!</h1>
+            <div class="flex">
+                <h1 class="text-lg">Welcome {{ user.username }}!</h1>
+                <h1 class="text-lg underline ml-2"><a href="{% url 'profiles_home' %}">Home</a></h1>
+                <h1 class="text-lg underline ml-2"><a href="{% url 'logout' %}">Logout</a></h1>
+            </div>
         {% endif %}
     </div>
 

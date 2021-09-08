@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ profile.name }}
+{% endblock %}
+
+{% block content %}
+<div class="font-bold text-5xl p-6">
+    {{ profile.name }}
+    {% if request.user == profile.user %}
+        <p class="underline"><a href="{% url 'profile_edit' %}">Edit</a></p>
+    {% endif %}
+</div>
+<div class="p-6 text-2xl">
+    {{ profile.bio }}
+</div>
+{% endblock %}
