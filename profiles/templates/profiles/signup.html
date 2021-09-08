@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Signup
+{% endblock %}
+
+{% block content %}
+<div class="flex justify-center align-center mt-6 p-6 bg-gray-200">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+                <tr>
+                    <td>
+                        {{ field.label_tag }}
+                    </td>
+                    <td>
+                        {{ field }}
+                    </td>
+                    <td>
+                        {% if field.help_text %}
+                        <small class="text-gray-500">{{ field.help_text }}</small>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% for error in field.errors %}
+                    <tr>
+                        <td>
+                            <p class="text-red-500"> {{ error }} </p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+        <button type="submit" class="p-6 bg-gray-700 text-white mt-4">Sign Up</button>
+    </form>
+</div>
+{% endblock %}

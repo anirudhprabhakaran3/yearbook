@@ -7,8 +7,10 @@ Home
 {% block content %}
     <div class="bg-gray-100 p-2">
         <h1 class="text-4xl font-bold">ECE</h1>
-
-        <p class="text-center">Registered users: {{ users_count }}</p>
-        
+        <div class="text-center">
+            <p>Registered users: {{ users_count }}</p>
+            <p class="underline"><a href="{% url 'signup' %}">Signup</a></p>
+            <p class="underline"><a href="{% url 'login' %}">Login</a></p>
+        </div>
     </div>
 {% endblock %}

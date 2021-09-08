@@ -7,10 +7,13 @@
     <title>{% block title %}{% endblock %} | Batch of 2024, NITK</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-100">
 
-    <div class="bg-blue-500 text-white p-6">
-        <h1 class="text-xl font-bold">Batch of 2024, NITK</h1>
+    <div class="bg-blue-500 text-white p-6 flex align-center justify-between">
+        <h1 class="text-xl font-bold"> <a href="{% url 'index' %}">Batch of 2024, NITK</a></h1>
+        {% if user.is_authenticated %}
+            <h1 class="text-lg">Welcome {{ user.username }}!</h1>
+        {% endif %}
     </div>
 
     {% block content %}

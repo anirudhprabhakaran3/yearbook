@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Profile Home
+{% endblock %}
+
+{% block content %}
+<div class="p-6">
+    Welcome to profile home!
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+{% endblock %}
