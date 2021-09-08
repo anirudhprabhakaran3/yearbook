@@ -5,10 +5,11 @@ Signup
 {% endblock %}
 
 {% block content %}
-<div class="flex justify-center align-center mt-6 p-6 bg-gray-200">
-    <form method="POST">
+<div class="container d-flex flex-column align-items-center justify-content-center">
+    <h1>Sign up</h1>
+    <form method="POST" class="mt-4 p-4 border border-primary rounded shadow mb-4">
         {% csrf_token %}
-        <table>
+        <table class="table table-borderless">
             {% for field in form %}
                 <tr>
                     <td>
@@ -19,20 +20,19 @@ Signup
                     </td>
                     <td>
                         {% if field.help_text %}
-                        <small class="text-gray-500">{{ field.help_text }}</small>
+                        <small class="text-secondary">{{ field.help_text }}</small>
                         {% endif %}
                     </td>
-                </tr>
-                {% for error in field.errors %}
-                    <tr>
+                    {% for error in field.errors %}
                         <td>
-                            <p class="text-red-500"> {{ error }} </p>
+                            <p class="text-danger"> {{ error }} </p>
                         </td>
-                    </tr>
-                {% endfor %}
+                        
+                    {% endfor %}
+                </tr>
             {% endfor %}
         </table>
-        <button type="submit" class="p-2 bg-gray-700 text-white mt-4">Sign Up</button>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
 </div>
 {% endblock %}

@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 
 from .models import Profile
 from .forms import ProfileForm
@@ -18,14 +17,17 @@ def index(request):
     return render(request, 'profiles/index.html', args)
 
 def signup(request):
-    form = UserCreationForm(request.POST)
-    if form.is_valid():
-        form.save()
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password1')
-        user = authenticate(username=username, password=password)
-        login(request, user)
-        return redirect('profiles_home')
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('profiles_home')
+    else:
+        form = UserCreationForm()
     args = {
         'form': form,
     }
@@ -40,13 +42,9 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, "You are logged in!")
                 return redirect('profiles_home')
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
-    form = AuthenticationForm()
+    else:
+        form = AuthenticationForm()
     args = {
         'form': form
     }
@@ -64,7 +62,6 @@ def profile_home(request):
 @login_required
 def logout_view(request):
     logout(request)
-    messages.info(request, "Logged out successfully")
     return redirect("index")
 
 @login_required

@@ -5,15 +5,15 @@ Home
 {% endblock %}
 
 {% block content %}
-    <div class="bg-gray-100 p-2">
-        <h1 class="text-5xl font-bold p-6">ECE Yearbook, Batch of 2024</h1>
-        <div class="text-center mt-6">
-            <p class="text-xl">Registered users: {{ users_count }}</p>
+    <div class="container">
+        <h1 class="fw-bold">ECE Yearbook, Batch of 2024</h1>
+        <div class="container text-center mt-4">
+            <p class="fs-2">Registered users: {{ users_count }}</p>
             {% if user.is_authenticated %}
-            <p class="underline text-xl mt-4"><a href="{% url 'profiles_home' %}">Profiles</a></p>
+                <p class="fs-3"><a href="{% url 'profiles_home' %}">Profiles</a></p>
             {% else %}
-                <p class="underline text-xl mt-4"><a href="{% url 'signup' %}">Signup</a></p>
-                <p class="underline text-xl mt-4"><a href="{% url 'login' %}">Login</a></p>
+                <p class="fs-3"><a href="{% url 'signup' %}">Signup</a></p>
+                <p class="fs-3"><a href="{% url 'login' %}">Login</a></p>
             {% endif %}
         </div>
     </div>

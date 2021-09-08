@@ -5,13 +5,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="font-bold text-5xl p-6">
-    {{ profile.name }}
+<div class="container ml-auto mr-auto">
+    <h1 class="display-3"><u>{{ profile.name }}</u></h1>
+    <p class="mt-4">{{ profile.bio }}</p>
     {% if request.user == profile.user %}
-        <p class="underline"><a href="{% url 'profile_edit' %}">Edit</a></p>
-    {% endif %}
+    <a href="{% url 'profile_edit' %}" class="p-2 btn btn-primary rounded mt-4">Edit Profile</a>
+{% endif %}
 </div>
 <div class="p-6 text-2xl">
-    {{ profile.bio }}
+    
 </div>
 {% endblock %}

@@ -5,20 +5,18 @@ Profile Home
 {% endblock %}
 
 {% block content %}
-<div class="p-6 text-5xl font-bold">
-    Welcome to profile home!<br>
-</div>
-
-<div class="p-6 text-3xl text-gray-600">
-    <p>Click <a href="{% url 'profile_edit' %}" class="underline font-bold">here</a> to make/edit your profile.</p>
+<div class="container">
+    <h1 class="fw-bold">Welcome to Profiles home!</h1>
 </div>
 
 
-<div class="p-10 text-xl">
-    <p class="font-bold">Profiles:</p>
-    <ul class="list-disc">
+<div class="container mt-4">
+    <h3>Available Profiles:</h3>
+    <ul class="list-group d-inline-block mt-2">
         {% for p in profiles %}
-            <li class="mt-2"><a href="{% url 'profile_detail' pk=p.pk %}" class="hover:underline">{{ p.name }}</a></li>
+            <a href="{% url 'profile_detail' pk=p.pk %}" class="list-group-item list-group-item-actionable">
+                {{ p.name }}
+            </a>
         {% endfor %}
     </ul>
 
