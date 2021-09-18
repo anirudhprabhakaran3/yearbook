@@ -14,29 +14,27 @@
     {% if request.user == profile.user %}
     <a href="{% url 'profile_new' %}" class="p-2 btn btn-primary rounded mt-4">Edit Profile</a>
 {% endif %}
-</div>
+
 <div class="p-6 text-2xl">
   <hr>
-  <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_profile' pk=profile.pk %}">Add comment</a>
-  <div class="container">
+    <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_profile' pk=profile.pk %}">Add comment</a>
 
+{% for comment in profile.comments.all %}
+<br>
+    {% if user.is_authenticated or comment.approved_comment %}
 
-  {% for comment in profile.comments.all %}
-  <br>
-      {% if user.is_authenticated %}
+            {{ comment.created_date }}
+            {% if not comment.report_comment %}
+                <a class="btn btn-primary" href="{% url 'report_comment' pk=comment.pk %}">report</a>
+            {% endif %}
 
-              {{ comment.created_date }}
-              {% if not comment.report_comment %}
-                  <a class="btn btn-primary" href="{% url 'report_comment' pk=comment.pk %}">report</a>
-              {% endif %}
+        <p>{{ comment.text|safe|linebreaks }}</p>
+        <p>Posted by: <strong>{{ user.username }}</strong></p>
 
-          <p>{{ comment.text|safe|linebreaks }}</p>
-          <p>Posted by: <strong>{{ profile.name }}</strong></p>
-
-      {% endif %}
-  {% empty %}
-      <p>No comments posted.</p>
-  {% endfor %}
+    {% endif %}
+{% empty %}
+    <p>No comments posted.</p>
+{% endfor %}
 </div>
 </div>
 {% endblock %}

@@ -11,6 +11,6 @@ urlpatterns = [
     path('profiles/<int:pk>', views.profile_detail, name='profile_detail'),
     path('profiles/new', views.profile_new, name='profile_new'),
     path('profiles/edit', views.profile_edit, name='profile_edit'),
-    path('profiles/<int:pk>/comment/', views.add_comment_to_profile, name='add_comment_to_profile'),
-    path('comment/<int:pk>/report/', views.report_comment, name='report_comment'),
+    path('profiles/<int:pk>/comment/',views.add_comment_to_profile,name='add_comment_to_profile'),
+    path('comment/<int:pk>/report',views.report_comment,name='report_comment'),
 ]

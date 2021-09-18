@@ -112,33 +112,25 @@ def profile_edit(request):
     }
     return render(request, 'profiles/profile_edit.html', args)
 
-#################################################
-#################################################
-
 @login_required
 def add_comment_to_profile(request,pk):
-    try:
-        profile = request.user.profile
-    except Profile.DoesNotExist:
-        profile = Profile(user=request.user)
+    post = get_object_or_404(Profile,pk=pk)
     if request.method == 'POST':
-        form = CommentForm(request.POST,instance=profile)
+        form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form.save()
-            # comment.post = profile
+            comment = form.save(commit=False)
+            comment.post = post
             comment.save()
-
-            return redirect('profile_detail',pk=profile.pk)
+            return redirect('profile_detail',pk=post.pk)
 
     else:
-        form = CommentForm(instance=profile)
+        form = CommentForm()
+
     return render(request,'profiles/comment_form.html',{'form':form})
-
-
 
 @login_required
 def report_comment(request,pk):
     comment = get_object_or_404(Comment,pk=pk)
-    profile_pk = comment.profile.pk
+    post_pk = comment.post.pk
     comment.delete()
-    return redirect('profile_detail',pk=profile_pk)
+    return redirect('profile_detail',pk=post_pk)
