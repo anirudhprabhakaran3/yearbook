@@ -4,8 +4,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
-from .models import Profile
-from .forms import ProfileForm
+from .models import Profile,Comment
+from .forms import ProfileForm,CommentForm
 
 # Create your views here.
 
@@ -111,3 +111,26 @@ def profile_edit(request):
         'form': form,
     }
     return render(request, 'profiles/profile_edit.html', args)
+
+@login_required
+def add_comment_to_profile(request,pk):
+    post = get_object_or_404(Profile,pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('profile_detail',pk=post.pk)
+
+    else:
+        form = CommentForm()
+
+    return render(request,'profiles/comment_form.html',{'form':form})
+
+@login_required
+def report_comment(request,pk):
+    comment = get_object_or_404(Comment,pk=pk)
+    post_pk = comment.post.pk
+    comment.delete()
+    return redirect('profile_detail',pk=post_pk)

@@ -28,7 +28,7 @@ SECRET_KEY = load_dotenv("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'eceyearbook.pythonanywhere.com']
-
+#'127.0.0.1', 'eceyearbook.pythonanywhere.com'
 
 # Application definition
 
