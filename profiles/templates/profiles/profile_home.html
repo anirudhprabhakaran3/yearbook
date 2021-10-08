@@ -5,21 +5,20 @@ Profile Home
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="fw-bold">Welcome to Profiles home!</h1>
-</div>
 
+<main class="main">
+  <h1>Explore about your classmates !</h1>
+  <h2>Available Profiles</h2>
+  <div class="cards-container">
 
-<div class="container mt-4">
-    <h3>Available Profiles:</h3>
-    <ul class="list-group d-inline-block mt-2">
-        {% for p in profiles %}
-            <a href="{% url 'profile_detail' pk=p.pk %}" class="list-group-item list-group-item-actionable">
-                {{ p.name }}
-            </a>
-        {% endfor %}
-    </ul>
+    {% for p in profiles %}
+      <a class="card" href="{% url 'profile_detail' pk=p.pk %}">
+        <img src="{{ p.image.url }}" alt="avatar" height="100px">
+        <p>{{ p.name }}</p>
+      </a>
+    {% endfor %}
 
+  </div>
+</main>
 
-</div>
 {% endblock %}
