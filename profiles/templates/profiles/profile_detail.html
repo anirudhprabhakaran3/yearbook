@@ -5,17 +5,23 @@
 {% endblock %}
 
 {% block content %}
-<div class="container ml-auto mr-auto">
-    <h1 class="display-3"><u>{{ profile.name }}</u></h1>
+
+<main class="main">
+  <h1>{{ profile.name }}</h1>
+  <div class="profile_container">
     {% if profile.image %}
-        <img src="{{ profile.image.url }}" alt="Image of {{ profile.name }}" height="300">
+    <img src="{{ profile.image.url }}" alt="Image of {{ profile.name }}">
     {% endif %}
-    <p class="mt-4">{{ profile.bio }}</p>
-    {% if request.user == profile.user %}
-    <a href="{% url 'profile_new' %}" class="p-2 btn btn-primary rounded mt-4">Edit Profile</a>
-{% endif %}
-</div>
-<div class="p-6 text-2xl">
-    
-</div>
+    <div class="content">
+      <h2 class="title">Bio</h2>
+      <div class="description">
+          {{ profile.bio }}
+      </div>
+    </div>
+  </div>
+  {% if request.user == profile.user %}
+    <h2><a href="{% url 'profile_new' %}"><u>Edit Profile</u></a></h2>
+  {% endif %}
+</main>
+
 {% endblock %}

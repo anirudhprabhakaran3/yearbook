@@ -6,48 +6,74 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Roboto+Condensed:wght@300;400;700&display=swap"
+      rel="stylesheet">
     <title>{% block title %}{% endblock %} | ECE Yearbook</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'profiles/index.css' %}">
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'index' %}">ECE Yearbook</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <span class="nav-link active">Welcome {{ user.username }}!</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profiles_home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile_new' %}">Add/Edit Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-                    </li>
-                {% endif %}
-            </ul>
+  <nav>
+    <div class="navbar">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="navbar__logo">
+        ECE YearBook
+      </div>
+      <div class="navbar__navigation">
+          <div class="navbar__links">
+            <a href="{% url 'profiles_home' %}">Home</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile_new' %}">Add/Edit Profile</a>
+            {% endif %}
+            {% if user.is_superuser %}
+            <a href="/admin">Admin</a>
+            {% endif %}
           </div>
-        </div>
-      </nav>
+          {% if user.is_authenticated %}
+          <a class="navbar__button" href="{% url 'logout' %}">Logout</a>
+          {% else %}
+          <a class="navbar__button" href="{% url 'login' %}">Login</a>
+          <a class="navbar__button" href="{% url 'signup' %}">Sign Up</a>
+          {% endif %}
+      </div>
+    </div>
+  </nav>
 
     {% block content %}
     {% endblock %}
 
+    <footer>
+      <div class="foot">
+        <div class="foot__left">
+          <div class="name">
+            {% if user.is_authenticated %}
+              {{ user.name }}
+            {% else %}
+              Welcome! Login to continue.
+            {% endif %}
+          </div>
+          <div class="tag">
+            ECE Batch of 2024
+          </div>
+        </div>
+        <div class="foot__right">
+          <a href="https://github.com/anirudhprabhakaran3/yearbook">View this project on GitHub</a>
+        </div>
+      </div>
+      <div class="copy-right">
+        CopyRight 2021 &copy; ECE Batch of 2024
+      </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="{% static 'profiles/script.js' %}"></script>
 </body>
 </html>
