@@ -104,6 +104,11 @@ a {
   font-size: 20px;
 }
 
+.navbar__links a:hover {
+  color: white;
+  background-color: #060f5e;
+}
+
 @media screen and (max-width: 600px) {
   .navbar__links a {
     margin: 0px 4px;
@@ -309,7 +314,6 @@ a {
   display: flex;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;

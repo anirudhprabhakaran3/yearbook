@@ -15,6 +15,7 @@ Profile Home
       <a class="card" href="{% url 'profile_detail' pk=p.pk %}">
         <img src="{{ p.image.url }}" alt="avatar" height="100px">
         <p>{{ p.name }}</p>
+        <span class="badge badge-pill badge-dark" style="background-color: #1c51a3;">{{ p.branch }}</span>
       </a>
     {% endfor %}
 
