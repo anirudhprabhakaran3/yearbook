@@ -8,14 +8,19 @@
 
 <main class="main">
   <h1>{{ profile.name }}</h1>
+  <span class="badge badge-pill" style="background-color:#060f5e;font-size:1em;">{{ profile.branch }}</span>
   <div class="profile_container">
     {% if profile.image %}
     <img src="{{ profile.image.url }}" alt="Image of {{ profile.name }}">
     {% endif %}
     <div class="content">
-      <h2 class="title">Bio</h2>
+      <h2 class="title"><u>Bio</u></h2>
       <div class="description">
           {{ profile.bio }}
+      </div>
+      <br>
+      <div>
+        <h5><u>Branch</u>: {{ profile.branch }}</h5>
       </div>
     </div>
   </div>

@@ -9,4 +9,5 @@ class ProfileForm(forms.ModelForm):
             'name',
             'bio',
             'image',
+            'branch'
         )
